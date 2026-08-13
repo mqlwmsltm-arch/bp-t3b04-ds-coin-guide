@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>글 목록 (2/2) · t3b04-ds-coin-guide</title>
+  <meta name="description" content="t3b04-ds-coin-guide에 올라온 글 목록입니다.">
+  <link rel="canonical" href="https://dangsan-info-song.mapo-room-guide.xyz/posts-2.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <style>
+        :root {
+            --bg-color: #08090c;
+            --main-gradient: linear-gradient(180deg, #08090c 0%, #17131b 100%);
+            --card-surface: rgba(255, 255, 255, 0.02);
+            --border-color: rgba(255, 255, 255, 0.04);
+            --text-high: #eae8f0;
+            --text-low: #8e8b98;
+            --peach: #fda4af;
+            --glow: rgba(253, 164, 175, 0.12);
+            --font-serif: 'Gowun Batang', serif;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--main-gradient);
+            color: var(--text-high);
+            font-family: var(--font-serif);
+            line-height: 1.85;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 660px;
+            margin: 0 auto;
+            padding: 90px 24px;
+            width: 100%;
+        }
+
+        .blog-header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .blog-header::after {
+            content: '';
+            display: block;
+            width: 35px;
+            height: 1px;
+            background: var(--peach);
+            margin: 20px auto 0;
+            opacity: 0.4;
+            box-shadow: 0 0 6px var(--peach);
+        }
+
+        .blog-sub {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--peach);
+            font-family: var(--font-sans);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .blog-title {
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.45;
+            letter-spacing: -0.01em;
+        }
+
+        .blog-date {
+            font-size: 0.85rem;
+            color: var(--text-low);
+            margin-top: 10px;
+            font-family: var(--font-sans);
+        }
+
+        .essay-content {
+            font-size: 1.08rem;
+            color: var(--text-high);
+            text-align: justify;
+        }
+
+        .essay-p {
+            margin-bottom: 28px;
+            text-indent: 10px;
+        }
+
+        .highlight-quote {
+            background: var(--card-surface);
+            border-left: 2px solid var(--peach);
+            padding: 20px 24px;
+            margin: 36px 0;
+            border-radius: 0 8px 8px 0;
+            backdrop-filter: blur(8px);
+            border-top: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .quote-inner {
+            font-style: italic;
+            color: #fdf2f8;
+            font-size: 1.02rem;
+        }
+
+        .comments {
+            margin-top: 75px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 40px;
+        }
+
+        .comments-label {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            color: var(--peach);
+            letter-spacing: 0.12em;
+            margin-bottom: 22px;
+            text-transform: uppercase;
+        }
+
+        .comment-node {
+            background: var(--card-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .comment-node:hover {
+            border-color: rgba(253, 164, 175, 0.22);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .comment-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+        }
+
+        .author-name {
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .post-time {
+            color: var(--text-low);
+        }
+
+        .stars {
+            color: var(--peach);
+            font-size: 0.75rem;
+            margin-top: 2px;
+        }
+
+        .text-body {
+            font-size: 0.92rem;
+            color: var(--text-high);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 35px 24px;
+            border-top: 1px solid var(--border-color);
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            color: var(--text-low);
+            letter-spacing: 0.05em;
+        }
+
+        .peach-glow {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+            top: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 16px;
+            }
+
+            .blog-title {
+                font-size: 1.55rem;
+            }
+
+            .essay-content {
+                font-size: 1.02rem;
+            }
+        }
+    </style>
+  <meta property="og:title" content="글 목록 (2/2) · t3b04-ds-coin-guide">
+  <meta property="og:description" content="t3b04-ds-coin-guide에 올라온 글 목록입니다.">
+  <meta property="og:url" content="https://dangsan-info-song.mapo-room-guide.xyz/posts-2.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+</head>
+<body>
+  <div class="container">
+    <header class="blog-header">
+            <div class="peach-glow"></div>
+            <div class="blog-sub">RIVER AND SOUND</div>
+            <div class="blog-title">강철 다리 너머 반짝이는 철마의 은빛 창문들과 아지랑이의 밤</div>
+            <div class="blog-date">2026. 05. 27</div>
+        </header>
+    <main>
+      <h1>글 목록</h1>
+      <p>전체 40개 · 2/2 페이지</p>
+      <ul class="post-list">
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260721-0238.html">당산 코인노래방 가이드와 대조하는 마포 단체 회식용 대형 룸 노래방 가격 정보 및 기준</a>
+        <p class="post-item__summary">당산 코인노래방 가이드가 제안하는 가벼운 비용 구조와 달리 마포 지역의 단체 회식용 대형 룸은 완전히 다른 접근 방식을 요구합니다. 소규모 인원이 시간을 단위로 결제하는 코인 노래방과 달리, 대형 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260721-0239.html">당산 코인노래방 가이드와 비교해 보는 합정 셔츠룸 단골들이 뽑은 핫플 매거진 예약법</a>
+        <p class="post-item__summary">당산 코인노래방 가이드처럼 무작정 찾아가서 즐기는 곳과 합정 지역의 특수 업소는 시스템 자체가 완전히 다릅니다. 많은 이용자가 실패하는 가장 큰 지점은 예약 절차를 제대로 숙지하지 않고 방문하여 현</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0353.html">당산 코인노래방 가이드로 본 합정 노래방 추천정보 이용 주의점</a>
+        <p class="post-item__summary">친구들과 합정 거리를 걷다가 갑자기 노래를 부르고 싶어 즉흥적으로 노래방을 찾는 상황을 자주 마주하게 됩니다. 아무 정보 없이 간판만 보고 들어갔다가 기기 상태가 좋지 않거나 공간이 비좁아 당황하는</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0354.html">당산 코인노래방 가이드로 살펴보는 연남 클럽 추천정보와 문화</a>
+        <p class="post-item__summary">많은 이들이 연남동의 밤 문화를 단순히 복잡하고 소란스러운 공간으로만 치부하며 오해하곤 합니다. 당산 코인노래방 가이드 문서를 찾아보시는 분들도 사실은 정적인 휴식과 역동적인 에너지를 동시에 원하실</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0355.html">당산 코인노래방 가이드와 비교하는 합정 셔츠룸 추천정보 핵심 정리</a>
+        <p class="post-item__summary">쾌적한 여가 시간을 보내기 위해서는 몇 가지 충족 조건이 필수적입니다. 특히 당산 코인노래방 가이드 정보를 검색할 만큼 프라이빗한 공간을 선호하는 분들에게는 합정 지역의 시설들이 매력적인 대안이 될</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0356.html">당산 코인노래방 가이드 확인하고 공덕 가라오케 추천정보 분석하기</a>
+        <p class="post-item__summary">여러분은 평소 여가 시간을 보낼 때 어떤 기준을 가장 중요하게 생각하시나요. 당산 코인노래방 가이드 등을 참고하며 개인적인 공간을 찾는 이들에게 가라오케는 매력적인 선택지가 될 수 있습니다. 업체의</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0357.html">당산 코인노래방 가이드 활용해 찾는 상수 마사지 추천정보</a>
+        <p class="post-item__summary">당산 코인노래방 가이드 문서를 참고하여 마포구 지역의 다양한 여가 시설을 분석하는 흐름에서 이번에는 상수 마사지 추천정보 항목을 살펴보려 합니다. 마사지 샵을 선택할 때는 무분별한 광고성 후기에 의</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0358.html">당산 코인노래방 가이드 기반의 망원 노래방 추천정보 비교 분석</a>
+        <p class="post-item__summary">당산 코인노래방 가이드와 유사한 관점에서 망원 노래방 추천정보 항목을 분석할 때 가장 큰 고민은 시설의 형태와 가격 체계입니다. 노래방을 선택하는 기준은 크게 시간제로 운영되는 전통적인 방식과 곡당</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0359.html">당산 코인노래방 가이드에서 알려주는 홍대 노래방 추천정보 예약법</a>
+        <p class="post-item__summary">당산 코인노래방 가이드의 체계적인 접근 방식을 응용하여 홍대 노래방 추천정보 이용 시 흔히 발생하는 실패 지점을 먼저 점검해 보겠습니다. 많은 이용객이 예약 없이 방문하거나 사전에 시설 규모를 파악</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0360.html">당산 코인노래방 가이드 활용한 공덕 셔츠룸 추천정보 탐색법</a>
+        <p class="post-item__summary">흔히 당산 코인노래방 가이드 문서를 참고하여 주변 문화 시설을 탐색하는 이들이 많습니다. 하지만 조금 더 차별화된 여가 시간을 원한다면 공덕 지역의 시스템을 이해하는 과정이 필요합니다. 공덕 셔츠룸</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0361.html">당산 코인노래방 가이드로 본 연남 유흥 추천정보 초행자 주의점</a>
+        <p class="post-item__summary">갑작스럽게 약속 장소가 변경되어 낯선 지역을 방문할 때 당황하는 경우가 많습니다. 예를 들어, 당산 코인노래방 가이드 정도만 숙지하고 연남동의 번화가를 방문했다가 예상치 못한 분위기에 당혹감을 느끼</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0362.html">당산 코인노래방 가이드와 오해를 바로잡는 마곡 가라오케 추천정보</a>
+        <p class="post-item__summary">많은 이들이 마곡 지역의 유흥 문화는 무조건 비용이 높고 접근이 어렵다는 오해를 가지고 있습니다. 당산 코인노래방 가이드의 간편함과 비교하면 복잡해 보일 수 있으나, 시간대를 잘 활용하면 오히려 효</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0363.html">당산 코인노래방 가이드 활용해 마곡 유흥 추천정보 확인하기</a>
+        <p class="post-item__summary">당산 코인노래방 가이드 정보를 찾는 분들이라면 인근 지역의 유흥 문화에도 자연스럽게 관심이 생기기 마련입니다. 특히 마곡은 최근 기업 입주가 늘어나며 직장인들을 위한 다양한 놀이 공간이 밀집해 있는</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/juice-1.html">당산 코인노래방 가이드</a>
+        <p class="post-item__summary">당산 지역 코인노래방을 찾으신다면 기본적인 이용 절차와 주변 환경을 먼저 이해하는 것이 중요합니다. 코인노래방은 일반 노래방과 달리 시간 단위 또는 곡 단위 요금제로 운영되는 경우가 많으며, 이는 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/juice-2.html">당산 코인노래방 가이드</a>
+        <p class="post-item__summary">당산 지역에서 코인노래방을 찾을 때는 다양한 선택지가 존재합니다. 지역 내에는 다양한 연령대와 취향을 고려한 인테리어 및 음향 시설을 갖춘 업所들이 위치해 있어, 이용자 환경에 따라 최적의 장소를 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/normal-1.html">당산 코인노래방 가이드</a>
+        <p class="post-item__summary">당산 일대의 코인노래방은 대중적인 노래방 문화를 간편하게 즐길 수 있는 공간으로 자리 잡고 있습니다. 다양한 장르의 음원을 제공하며, 쾌적한 공간과 합리적인 요금 체계로 직장인이나 학생들에게 인기 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/normal-2.html">당산 코인노래방 가이드</a>
+        <p class="post-item__summary">당산 지역의 코인노래방은 접근성과 편의성이 우수한 위치에 자리 잡고 있어 다양한 이용자들에게 인기를 얻고 있습니다. 주로 근처 직장인이나 학생들을 중심으로 이용이 활발하며, 비교적 넓은 노래방 환경</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/normal-3.html">당산 코인노래방 가이드</a>
+        <p class="post-item__summary">당산 지역에는 다양한 코인노래방이 위치해 있어 방문 목적에 맞게 선택할 수 있습니다. 코인노래방은 일반적으로 시간 단위 이용료를 내고 노래방실을 이용하는 형태로, 개인이나 소규모 그룹이 편리하게 이</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/review-001.html">당산 코인노래방 가이드</a>
+        <p class="post-item__summary">당산 코인노래방 가이드를 찾는 사람에게, 이곳은 당신이 찾아야 할 곳이다. 하지만, 오늘은 당산 코인노래방에 대해서만 이야기하지 않을 것이다. 오늘은 MK울트라 프로젝트의 1972년 의회 청문회에서</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/review-002.html">형님이 딱 잘라 말해주지: 당산 코인노래방 원가율의 블랙박스, 손님이 계산기를 두드린 썰</a>
+      </li>
+      </ul>
+    <nav class="pager">
+      <a class="pager__link" href="posts.html">1</a>
+      <span class="pager__current">2</span>
+    </nav>
+    </main>
+  </div>
+</body>
+</html>
